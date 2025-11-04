@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Completo | HR Equipo Hospitalario</title>
+  <!--
+    Hoja de estilos principal (colores, fuentes, grid, tarjetas, etc)
+    Puedes cambiar la paleta en styles.css
+  -->
+  <link rel="stylesheet" href="styles.css">
+  <!--
+    Tipografía Poppins para títulos y Open Sans para texto
+    Se cargan desde Google Fonts
+  -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+  <!--
+    Favicon/logo de la empresa (aparece en la pestaña del navegador)
+    Imagen: assets/BlueNavyWhite.png
+  -->
+  <link rel="icon" type="image/png" href="assets/BlueNavyWhite.png">
+</head>
+<body>
+  <!--
+    Header reutilizado en todas las páginas
+    Logo principal: assets/BlueNavyWhite.png (izquierda)
+    Menú de navegación con enlaces a secciones de la página principal
+  -->
+  <header class="header">
+    <!-- Logo a la izquierda, ahora es un botón/enlace al inicio -->
+    <a href="index.html" class="logo-link" title="Ir al inicio">
+      <img src="assets/BlueNavyWhite.png" alt="Logo HR" class="logo">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html#productos">Productos</a></li>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#clientes">Clientes</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!--
+      Sección principal de catálogo extendido
+      Título y filtros de categorías (botones)
+      Los productos se muestran en un grid de 3 columnas (ver styles.css)
+      Cada tarjeta de producto incluye imagen, nombre, descripción, precio y botón
+      Las imágenes de productos se definen en script.js (campo 'imagen')
+    -->
+    <section class="productos">
+      <h2>Catálogo Completo de Productos</h2>
+      <!-- Filtros de categoría (puedes agregar más en el HTML y script.js) -->
+      <div class="filtros">
+        <button class="filtro activo" data-filtro="todos">Todos</button>
+        <button class="filtro" data-filtro="monitores">Monitores</button>
+        <button class="filtro" data-filtro="camas">Camas</button>
+        <button class="filtro" data-filtro="quirurgico">Equipo Quirúrgico</button>
+        <button class="filtro" data-filtro="diagnostico">Diagnóstico</button>
+      </div>
+      <!--
+        Catálogo visual de productos (máximo 20 por página)
+        El contenido se llena dinámicamente desde script.js
+        Cada producto tiene su propia imagen (ver array 'productos' en script.js)
+      -->
+      <div class="catalogo" id="catalogo-productos">
+        <!-- Productos se llenan dinámicamente -->
+      </div>
+    </section>
+  </main>
+  <!--
+    Footer corporativo
+    Logo pequeño: assets/BlueNavyWhite.png
+    Texto de derechos reservados
+  -->
+  <footer class="footer">
+    <img src="assets/BlueNavyWhite.png" alt="Logo HR pequeño" class="footer-logo">
+    <p>&copy; 2025 HR Equipo Hospitalario. Todos los derechos reservados.</p>
+  </footer>
+  <!--
+    script.js contiene:
+    - El array de productos (puedes agregar, editar o eliminar productos)
+    - La función renderProductos() para mostrar productos según filtro y cantidad
+    - Lógica de filtros y animaciones
+  -->
+  <script src="script.js"></script>
+  <!--
+    Script adicional para inicializar el catálogo extendido y filtros
+    No es necesario modificarlo si solo cambias productos en script.js
+  -->
+  <script>
+    // Renderizar 20 productos en la página exclusiva
+    document.addEventListener('DOMContentLoaded', function() {
+      renderProductos('todos', 20, 'catalogo-productos');
+      // Filtros funcionales para catálogo extendido
+      document.querySelectorAll('.filtro').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filtro').forEach(b => b.classList.remove('activo'));
+          this.classList.add('activo');
+          renderProductos(this.dataset.filtro, 20, 'catalogo-productos');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

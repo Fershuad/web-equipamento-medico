@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Equipo Hospitalario</title>
+  <!--
+    Hoja de estilos principal (colores, fuentes, grid, tarjetas, etc)
+    Puedes cambiar la paleta en styles.css
+  -->
+  <link rel="stylesheet" href="styles.css">
+  <!--
+    Tipografía Poppins para títulos y Open Sans para texto
+    Se cargan desde Google Fonts
+  -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+  <!--
+    Favicon/logo de la empresa (aparece en la pestaña del navegador)
+    Imagen: assets/BlueNavyWhite.png
+  -->
+  <link rel="icon" type="image/png" href="assets/SpaceCadetWhite.png">
+</head>
+<body>
+  <!--
+    Header principal
+    Logo: assets/BlueNavyWhite.png (izquierda)
+    Menú de navegación con enlaces a secciones de la misma página
+  -->
+  <header class="header">
+    <!-- Logo a la izquierda, ahora es un botón/enlace al inicio -->
+    <a href="index.html" class="logo-link" title="Ir al inicio">
+      <img src="assets/BlueNavyWhite.png" alt="Logo HR" class="logo">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#clientes">Clientes</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!--
+    Sección hero/banner principal
+    Muestra el mensaje de confianza y precisión
+    Imagen de fondo/logo grande: assets/BlueNavyWhite.png (opacidad baja, decorativa)
+  -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Confianza y Precisión en Equipos Médicos</h1>
+      <p>Venta y distribución de equipo hospitalario de alta calidad en México.</p>
+      <a href="#productos" class="btn-primary">Ver Catálogo</a>
+    </div>
+    <img src="assets/BlueNavyWhite.png" alt="Logo HR grande" class="hero-logo">
+  </section>
+  <!--
+    Sección de productos destacados (catálogo principal)
+    Filtros de categoría (botones)
+    Solo se muestran 5 productos (ver script.js)
+    Botón para ir a la página de catálogo extendido (productos.html)
+    Las imágenes de productos se definen en script.js (campo 'imagen')
+  -->
+  <section id="productos" class="productos">
+    <h2>Nuestros Productos</h2>
+    <!-- Filtros de categorías -->
+    <div class="filtros">
+      <button class="filtro activo" data-filtro="todos">Todos</button>
+      <button class="filtro" data-filtro="monitores">Monitores</button>
+      <button class="filtro" data-filtro="camas">Camas</button>
+      <button class="filtro" data-filtro="quirurgico">Equipo Quirúrgico</button>
+      <button class="filtro" data-filtro="diagnostico">Diagnóstico</button>
+    </div>
+    <!--
+      Catálogo principal: solo 5 productos
+      El contenido se llena dinámicamente desde script.js
+      Cada producto tiene su propia imagen (ver array 'productos' en script.js)
+    -->
+    <div class="catalogo" id="catalogo">
+      <!-- Productos se llenan dinámicamente por script.js -->
+    </div>
+    <!--
+      Botón para ver más productos (lleva a productos.html)
+    -->
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="productos.html" class="btn-primary" id="btn-mostrar-mas">Mostrar más productos</a>
+    </div>
+  </section>
+  <!--
+    Sección de servicios ofrecidos
+    Íconos médicos (emoji), títulos y descripciones
+  -->
+  <section id="servicios" class="servicios">
+    <h2>Servicios</h2>
+    <div class="servicios-lista">
+      <div class="servicio">
+        <span class="icon-medico">🩺</span>
+        <h3>Asesoría Especializada</h3>
+        <p>Te ayudamos a elegir el equipo ideal para tu hospital o clínica.</p>
+      </div>
+      <div class="servicio">
+        <span class="icon-medico">🔧</span>
+        <h3>Instalación y Mantenimiento</h3>
+        <p>Soporte técnico profesional y mantenimiento preventivo/correctivo.</p>
+      </div>
+      <div class="servicio">
+        <span class="icon-medico">🚚</span>
+        <h3>Entrega a Nivel Nacional</h3>
+        <p>Enviamos a todo México con rapidez y seguridad.</p>
+      </div>
+    </div>
+  </section>
+  <!--
+    Sección de testimonios de clientes (hospitales)
+    Cada testimonio tiene texto y nombre del hospital/cliente
+  -->
+  <section id="clientes" class="clientes">
+    <h2>Testimonios de Hospitales</h2>
+    <div class="testimonios">
+      <div class="testimonio">
+        <p>“La calidad y servicio de HR Equipo Hospitalario superó nuestras expectativas.”</p>
+        <span>Hospital Ángeles</span>
+      </div>
+      <div class="testimonio">
+        <p>“Excelente atención y productos confiables para nuestro quirófano.”</p>
+        <span>Clínica San José</span>
+      </div>
+      <div class="testimonio">
+        <p>“Recomiendo ampliamente por su profesionalismo y rapidez.”</p>
+        <span>Hospital General CDMX</span>
+      </div>
+    </div>
+  </section>
+  <!--
+    Sección de contacto
+    Formulario para enviar mensaje (nombre, correo, teléfono, mensaje)
+    Información de contacto y fundador
+  -->
+  <section id="contacto" class="contacto">
+    <h2>Contacto</h2>
+    <form class="form-contacto">
+      <input type="text" placeholder="Nombre" required>
+      <input type="email" placeholder="Correo electrónico" required>
+      <input type="tel" placeholder="Teléfono">
+      <textarea placeholder="Mensaje" required></textarea>
+      <button type="submit" class="btn-primary">Enviar</button>
+    </form>
+    <div class="info-contacto">
+      <p><strong>Fundador:</strong> Victor Javier Hernandez Varela</p>
+      <p><strong>Teléfono:</strong> <a href="tel:5530168649">5530168649</a></p>
+      <p><strong>Ubicación:</strong> México</p>
+    </div>
+  </section>
+  <!--
+    Footer corporativo
+    Logo pequeño: assets/SpaceCadetWhite.png
+    Texto de derechos reservados
+  -->
+  <footer class="footer">
+    <img src="assets/SpaceCadetWhite.png" alt="Logo HR pequeño" class="footer-logo">
+    <p>&copy; 2025 HR Equipo Hospitalario. Todos los derechos reservados.</p>
+  </footer>
+  <!--
+    script.js contiene:
+    - El array de productos (puedes agregar, editar o eliminar productos)
+    - La función renderProductos() para mostrar productos según filtro y cantidad
+    - Lógica de filtros y animaciones
+  -->
+  <script src="script.js"></script>
+</body>
+</html>

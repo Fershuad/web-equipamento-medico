@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha Técnica del Producto</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/SpaceCadetWhite.png">
+  <style>
+    /* Ajusta el ancho máximo de la ficha aquí */
+  .ficha-container { max-width: 1000px; margin: 2rem auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px #0001; padding: 2.5rem; }
+  /* Ajusta el espacio entre imagen y datos */
+  .ficha-flex { display: flex; flex-direction: row; gap: 3rem; align-items: flex-start; }
+  /* Ajusta el tamaño del contenedor de imagen principal */
+  .ficha-imgs { flex: 0 0 380px; min-width: 260px; order: 1; }
+  /* Ajusta el tamaño de la imagen principal */
+  .ficha-imgs img { width: 380px; height: 380px; object-fit: contain; border-radius: 14px; margin-bottom: 1.2rem; }
+    /* Ajusta el tamaño de las miniaturas */
+    .ficha-thumbs {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      height: 380px; /* igual que la imagen principal para centrar */
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .ficha-imgs {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      min-width: 260px;
+      flex: 0 0 380px;
+      order: 1;
+    }
+    .ficha-thumbs img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid #eee;
+      transition: border 0.2s;
+      display: block;
+    }
+    .ficha-thumbs img.selected {
+      border: 2px solid #0E2E57;
+    }
+    /* Ajusta el ancho de la info */
+  .ficha-info { flex: 1 1 0; min-width: 320px; order: 2; }
+    /* Ajusta el tamaño del precio */
+    .ficha-precio { font-size: 1.7rem; color: #0E2E57; font-weight: bold; margin: 1.1rem 0; }
+    /* Ajusta el tamaño de la descripción */
+    .ficha-desc { font-size: 1.12rem; margin-bottom: 1.2rem; }
+    .ficha-volver { display: inline-block; margin-top: 1.2rem; color: #fff; background: #0E2E57; padding: 0.5em 1.2em; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    @media (max-width: 700px) { .ficha-flex { flex-direction: column; } }
+    /*
+      Puedes modificar los valores de max-width, width, height, font-size, etc.
+      para personalizar el tamaño de la ficha y las imágenes a tu gusto.
+    */
+  </style>
+</head>
+<body>
+  <div class="ficha-container">
+    <a href="index.html" class="ficha-volver" style="margin-bottom:2.2rem;margin-top:0;">&larr; Volver al catálogo</a>
+    <div class="ficha-flex">
+      <div class="ficha-imgs">
+        <div class="ficha-thumbs" id="ficha-thumbs"></div>
+        <img id="ficha-img-principal" src="" alt="Imagen principal del producto">
+      </div>
+      <div class="ficha-info">
+        <h1 id="ficha-nombre"></h1>
+        <div class="ficha-precio" id="ficha-precio"></div>
+        <div class="ficha-desc" id="ficha-desc"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Obtiene parámetros de la URL
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    // Productos (debería mantenerse sincronizado con script.js)
+    const productos = JSON.parse(localStorage.getItem('productos_ficha')) || [];
+    const idx = parseInt(getQueryParam('id'), 10);
+    const prod = productos[idx];
+    if (!prod) {
+      document.querySelector('.ficha-container').innerHTML = '<p>Producto no encontrado.</p>';
+    } else {
+      document.getElementById('ficha-nombre').textContent = prod.nombre;
+      document.getElementById('ficha-precio').textContent = prod.precio;
+      document.getElementById('ficha-desc').textContent = prod.descripcion;
+      // Galería de imágenes
+      const imagenes = [prod.imagen].concat(prod.imagenes || []);
+      const imgPrincipal = document.getElementById('ficha-img-principal');
+      const thumbs = document.getElementById('ficha-thumbs');
+      imgPrincipal.src = imagenes[0];
+      imgPrincipal.alt = prod.nombre;
+      thumbs.innerHTML = '';
+      imagenes.forEach((img, i) => {
+        const t = document.createElement('img');
+        t.src = img;
+        t.alt = 'Miniatura ' + (i+1);
+        if (i === 0) t.classList.add('selected');
+        t.addEventListener('click', () => {
+          imgPrincipal.src = img;
+          thumbs.querySelectorAll('img').forEach(e => e.classList.remove('selected'));
+          t.classList.add('selected');
+        });
+        thumbs.appendChild(t);
+      });
+      // Ya no se muestra sección de imágenes adicionales
+    }
+  </script>
+</body>
+</html>
