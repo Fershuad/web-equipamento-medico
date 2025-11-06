@@ -81,7 +81,20 @@
         <!-- Acciones: input de cantidad (label accesible) y botón WhatsApp -->
         <div class="ficha-actions">
           <label for="cantidad" class="sr-only">Cantidad</label>
-          <input id="cantidad" class="cantidad-input" type="number" min="1" step="1" value="1" aria-label="Cantidad de piezas" />
+          <div class="qty-control" role="group" aria-label="Selector de cantidad">
+            <button type="button" id="qty-decrease" class="btn-qty" aria-label="Disminuir cantidad">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <input id="cantidad" class="cantidad-input" type="number" min="1" step="1" value="1" aria-label="Cantidad de piezas" />
+            <button type="button" id="qty-increase" class="btn-qty" aria-label="Aumentar cantidad">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
           <a id="btn-whatsapp" class="btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp">Cotizar por WhatsApp</a>
         </div>
       </div>
@@ -143,6 +156,8 @@
 
         const btnWa = document.getElementById('btn-whatsapp');
         const cantidadInput = document.getElementById('cantidad');
+  const qtyDecrease = document.getElementById('qty-decrease');
+  const qtyIncrease = document.getElementById('qty-increase');
         function getCantidadSafe() {
           if (!cantidadInput) return 1;
           // Asegurar valor entero y mínimo 1
@@ -162,6 +177,34 @@
           if (cantidadInput) {
             cantidadInput.addEventListener('input', updateWhatsAppLink);
             cantidadInput.addEventListener('change', updateWhatsAppLink);
+            // Allow arrow keys to increment/decrement and keep sync
+            cantidadInput.addEventListener('keydown', (e) => {
+              if (e.key === 'ArrowUp') { e.preventDefault(); qtyIncrease.click(); }
+              if (e.key === 'ArrowDown') { e.preventDefault(); qtyDecrease.click(); }
+            });
+          }
+          // Buttons: increment / decrement with small animation and safe bounds
+          if (qtyIncrease) {
+            qtyIncrease.addEventListener('click', () => {
+              let v = getCantidadSafe();
+              cantidadInput.value = v + 1;
+              updateWhatsAppLink();
+              qtyIncrease.classList.add('btn-qty-press');
+              setTimeout(() => qtyIncrease.classList.remove('btn-qty-press'), 150);
+            });
+          }
+          if (qtyDecrease) {
+            qtyDecrease.addEventListener('click', () => {
+              let v = getCantidadSafe();
+              if (v > 1) {
+                cantidadInput.value = v - 1;
+                updateWhatsAppLink();
+              } else {
+                // slight feedback when at min
+                qtyDecrease.classList.add('btn-qty-shake');
+                setTimeout(() => qtyDecrease.classList.remove('btn-qty-shake'), 220);
+              }
+            });
           }
           if (!prod || !prod.nombre) {
             btnWa.setAttribute('aria-disabled', 'true');

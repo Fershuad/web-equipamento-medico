@@ -168,21 +168,53 @@ body {
 
 /* Estilos para el input de cantidad en la ficha */
 .cantidad-input {
-  width: 100px;
+  width: 96px;
   padding: 0 0.8rem;
-  border: 1px solid #2E5FA4;
-  border-radius: 8px;
+  border: 1px solid #E6EEF8;
+  border-radius: 10px;
   font-size: 1rem;
   height: 44px; /* misma altura que el botón */
-  background: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
   color: #0E2E57;
   text-align: center;
+  box-shadow: inset 0 -2px 6px rgba(14,46,87,0.03);
 }
 .cantidad-input:focus {
   outline: none;
   box-shadow: 0 0 0 4px #2E5FA422;
   border-color: #2E5FA4;
 }
+
+/* Quantity control buttons */
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+}
+.btn-qty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, #FFF 0%, #F3FBF8 100%);
+  color: #0E2E57;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  box-shadow: 0 2px 8px rgba(14,46,87,0.06);
+}
+.btn-qty svg { color: #0E2E57; }
+.btn-qty:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(14,46,87,0.09); }
+.btn-qty:focus { outline: none; box-shadow: 0 0 0 4px #2E5FA422; }
+.btn-qty-press { transform: scale(0.98); }
+.btn-qty-shake { animation: shake 0.22s; }
+@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-4px); } 50% { transform: translateX(3px); } 75% { transform: translateX(-2px); } 100% { transform: translateX(0); } }
+
+/* Slight visual polish for the actions area */
+.ficha-actions { background: linear-gradient(180deg,#fbfdff 0%,#ffffff 100%); padding: 0.6rem; border-radius: 12px; border: 1px solid #F0F6FB; }
 
 /* Visually hidden but accessible label */
 .sr-only {
