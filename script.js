@@ -267,7 +267,7 @@ function renderProductos(filtro = "todos", max = 5, idCatalogo = "catalogo") {
       <h3>${producto.nombre}</h3>
       <p>${producto.descripcion}</p>
       <div class="precio">${producto.precio}</div>
-      <button class="btn-primary">Solicitar información</button>
+      <button class="btn-primary">Ver ficha</button>
     `;
     // Botón de ficha técnica
     div.querySelector('button').addEventListener('click', function() {

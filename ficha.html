@@ -77,10 +77,20 @@
         <h1 id="ficha-nombre"></h1>
         <div class="ficha-precio" id="ficha-precio"></div>
         <div class="ficha-desc" id="ficha-desc"></div>
+
+        <!-- Acciones: input de cantidad (label accesible) y botón WhatsApp -->
+        <div class="ficha-actions">
+          <label for="cantidad" class="sr-only">Cantidad</label>
+          <input id="cantidad" class="cantidad-input" type="number" min="1" step="1" value="1" aria-label="Cantidad de piezas" />
+          <a id="btn-whatsapp" class="btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp">Cotizar por WhatsApp</a>
+        </div>
       </div>
     </div>
   </div>
   <script>
+      // Configuración opcional: número de WhatsApp en formato internacional (sin +, sin espacios). Ej: '5213312345678'
+      // Si queda vacío, se usará el endpoint de share (abrirá WhatsApp Web/Móvil para pegar el mensaje)
+      const WHATSAPP_PHONE = '';
     // Obtiene parámetros de la URL
     function getQueryParam(name) {
       const url = new URL(window.location.href);
@@ -116,6 +126,49 @@
         thumbs.appendChild(t);
       });
       // Ya no se muestra sección de imágenes adicionales
+
+        // --- WhatsApp: construir enlace formal y ordenado (reemplaza '#' por el número indicado) ---
+        function buildWhatsAppURL(phone, productName, qty) {
+          const name = (productName || '').trim();
+          const cantidad = (typeof qty === 'number' && qty > 0) ? qty : 1;
+          // Mensaje formal y claro, sin mostrar la palabra "cantidad" explícita
+          const message = `Hola, buen día. Quisiera cotizar ${cantidad} ${name}. ¿Me podría proporcionar el precio, por favor?`;
+          const encoded = encodeURIComponent(message);
+          if (phone && phone.toString().trim() !== '') {
+            const sanitized = phone.toString().replace(/\D/g, '');
+            return `https://wa.me/${sanitized}?text=${encoded}`;
+          }
+          return `https://wa.me/?text=${encoded}`;
+        }
+
+        const btnWa = document.getElementById('btn-whatsapp');
+        const cantidadInput = document.getElementById('cantidad');
+        function getCantidadSafe() {
+          if (!cantidadInput) return 1;
+          // Asegurar valor entero y mínimo 1
+          let v = Number.parseInt(cantidadInput.value, 10);
+          if (Number.isNaN(v) || v < 1) v = 1;
+          // Reflejar en el input (corrige valores no válidos)
+          cantidadInput.value = v;
+          return v;
+        }
+        if (btnWa) {
+          const updateWhatsAppLink = () => {
+            const qty = getCantidadSafe();
+            btnWa.href = buildWhatsAppURL(WHATSAPP_PHONE, prod.nombre, qty);
+          };
+          // Inicializa enlace
+          updateWhatsAppLink();
+          if (cantidadInput) {
+            cantidadInput.addEventListener('input', updateWhatsAppLink);
+            cantidadInput.addEventListener('change', updateWhatsAppLink);
+          }
+          if (!prod || !prod.nombre) {
+            btnWa.setAttribute('aria-disabled', 'true');
+            btnWa.classList.add('disabled');
+            btnWa.href = '#';
+          }
+        }
     }
   </script>
 </body>

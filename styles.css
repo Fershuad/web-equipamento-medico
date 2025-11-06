@@ -132,6 +132,87 @@ body {
   transform: translateY(-2px) scale(1.03);
 }
 
+/* Estilo específico para botón de WhatsApp en la ficha */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #25D366 0%, #128C7E 100%); /* colores estilo WhatsApp */
+  color: #fff;
+  padding: 0 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(37,211,102,0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 44px; /* altura consistente */
+  font-size: 1rem;
+}
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,211,102,0.16);
+}
+.btn-whatsapp.disabled { 
+  opacity: 0.6; 
+  pointer-events: none; 
+}
+
+/* Contenedor de acciones en la ficha (input + botón) */
+.ficha-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Estilos para el input de cantidad en la ficha */
+.cantidad-input {
+  width: 100px;
+  padding: 0 0.8rem;
+  border: 1px solid #2E5FA4;
+  border-radius: 8px;
+  font-size: 1rem;
+  height: 44px; /* misma altura que el botón */
+  background: #fff;
+  color: #0E2E57;
+  text-align: center;
+}
+.cantidad-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #2E5FA422;
+  border-color: #2E5FA4;
+}
+
+/* Visually hidden but accessible label */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Estilos para el input de cantidad en la ficha */
+.cantidad-input {
+  width: 80px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #2E5FA4;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #0E2E57;
+}
+.cantidad-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #2E5FA422;
+  border-color: #2E5FA4;
+}
+
 .hero-logo {
   width: 240px;
   opacity: 0.12;
