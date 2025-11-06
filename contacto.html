@@ -24,7 +24,7 @@
         <li><a href="index.html#productos">Productos</a></li>
         <li><a href="index.html#servicios">Servicios</a></li>
         <li><a href="index.html#clientes">Clientes</a></li>
-        <li><a href="contact.html">Contacto</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
   </header>
@@ -36,18 +36,18 @@
         <form id="contactForm" class="form-contacto" onsubmit="return false;" aria-label="Formulario de contacto">
           <input id="c-name" type="text" placeholder="Nombre" required>
           <input id="c-email" type="email" placeholder="Correo electrónico" required>
-          <input id="c-phone" type="tel" placeholder="Teléfono (opcional)">
+          <!-- Campo teléfono removido: la comunicación será vía WhatsApp -->
           <textarea id="c-message" placeholder="Mensaje / requerimiento" required></textarea>
           <div class="wa-send">
             <button id="btn-wa-send" class="btn-primary" type="button">Enviar por WhatsApp</button>
-            <small style="color:#2E5FA4">Se abrirá WhatsApp con tu mensaje para enviar a Victor.</small>
+            <small style="color:#2E5FA4">Se abrirá WhatsApp con tu mensaje para enviar a Victor. No es necesario incluir tu teléfono.</small>
           </div>
         </form>
       </div>
       <aside class="contact-meta">
         <h3>Información</h3>
         <p><strong>Fundador:</strong> Victor Javier Hernandez Varela</p>
-        <p><strong>Teléfono:</strong> <a href="tel:5530168649">5530168649</a></p>
+  <!-- Número removido del bloque público; comunicación por WhatsApp -->
         <p><strong>Horario:</strong> Lun-Vie 9:00-18:00</p>
         <p>Para cotizaciones rápidas, usa el botón "Enviar por WhatsApp" y se abrirá una conversación con Victor con el mensaje prellenado.</p>
       </aside>
@@ -65,21 +65,16 @@
 
     function buildContactWhatsApp(name, email, phone, message) {
       const parts = [];
-      if (name) parts.push(`Nombre: ${name}`);
-      if (email) parts.push(`Correo: ${email}`);
-      if (phone) parts.push(`Teléfono: ${phone}`);
-      if (message) parts.push(`Mensaje: ${message}`);
-      const body = `Hola, buen día. Tengo una consulta:\n` + parts.join('\n');
-      return `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(body)}`;
+        const body = `Hola, soy ${name}. Mi correo es ${email}.\n\n${message}`;
+        return `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(body)}`;
     }
 
     document.getElementById('btn-wa-send').addEventListener('click', () => {
       const name = document.getElementById('c-name').value.trim();
       const email = document.getElementById('c-email').value.trim();
-      const phone = document.getElementById('c-phone').value.trim();
       const message = document.getElementById('c-message').value.trim();
       if (!name || !email || !message) { alert('Por favor llena Nombre, Correo y Mensaje.'); return; }
-      const url = buildContactWhatsApp(name, email, phone, message);
+        const url = buildContactWhatsApp(name, email, message);
       // Abrir en nueva pestaña
       window.open(url, '_blank', 'noopener');
     });
