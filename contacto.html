@@ -63,10 +63,19 @@
     // Número de Victor (formato internacional sin +)
     const CONTACT_WA = '525530168649';
 
-    function buildContactWhatsApp(name, email, phone, message) {
+    function buildContactWhatsApp(name, email, message) {
       const parts = [];
-        const body = `Hola, soy ${name}. Mi correo es ${email}.\n\n${message}`;
-        return `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(body)}`;
+      const safe = v => (v === null || v === undefined) ? '' : String(v).trim();
+      const n = safe(name);
+      const e = safe(email);
+      const m = safe(message);
+
+      let intro = 'Hola, buen día.';
+      if (n) intro = `Hola, soy ${n}.`;
+      if (e) intro += ` Mi correo es ${e}.`;
+
+      const body = m ? `${intro}\n\n${m}` : intro;
+      return `https://wa.me/${CONTACT_WA}?text=${encodeURIComponent(body)}`;
     }
 
     document.getElementById('btn-wa-send').addEventListener('click', () => {

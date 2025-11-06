@@ -143,9 +143,10 @@
 
         // --- WhatsApp: construir enlace formal y ordenado (reemplaza '#' por el número indicado) ---
         function buildWhatsAppURL(phone, productName, qty) {
-          const name = (productName || '').trim();
+          const safe = v => (v === null || v === undefined) ? '' : String(v).trim();
+          const name = safe(productName) || 'este equipo';
           const cantidad = (typeof qty === 'number' && qty > 0) ? qty : 1;
-          // Mensaje formal y claro, sin mostrar la palabra "cantidad" explícita
+          // Mensaje formal y claro, usando valores por defecto si faltan
           const message = `Hola, buen día. Quisiera cotizar ${cantidad} ${name}. ¿Me podría proporcionar el precio, por favor?`;
           const encoded = encodeURIComponent(message);
           if (phone && phone.toString().trim() !== '') {
